@@ -1,3 +1,31 @@
+# In this forked repo
+
+This fork adds the following to Paralleljs
+
+- **Ability to do async processing inside the worker**
+```javascript
+var p = new Parallel('forwards');
+ 
+// Spawn a remote job that will do some async work
+p.spawn(function (data, cb) { // important to provide the second argument!
+  data = data.split('').reverse().join('');
+ 
+  setTimeout(function () {
+    cb(data); // Simulating an async call
+  }, 1000);
+  
+}).then(function (data) {
+  console.log(data) // logs sdrawrof
+});
+```
+
+- **Ability to use `importScripts` without `eval.js`** on browsers that support Blob. Otherwise Parallel.js will complain about eval, even when the browser does support create workers from Blobs.
+
+
+- Add **destroyBlobUrl** method on the `parallel` instance to make it free the resources after returning from the spawn function.
+
+Now the original README.
+
 Parallel.js
 ===========
 
